@@ -29,3 +29,5 @@ const userSchema = new mongoose.Schema({
 },{timestamps: true});
 
 // Fälten "created" och "updated" kommer automatiskt att läggas till i dokumentet
+
+export const User = mongoose.model("User", userSchema);  // vi exporterar detta för att använda det i ett anant fil.
