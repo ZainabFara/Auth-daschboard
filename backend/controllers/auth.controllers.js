@@ -20,13 +20,15 @@ export const signup = async (req, res) => {
 
       const hashedPassword = await bcrypt.hash(password,10);
       const verificationToken = Math.floor(100000 + Math.random() * 900000).toString();
-      const user = new User ({
+
+      const user = new User({
          email,
          password: hashedPassword,
          name,
          verificationToken,
-         verificationTokenExiresAt: Date.now() + 24 * 60 * 60 * 1000 // 24 timmar 
-      })
+         verificationTokenExpiresAt: Date.now() + 24 * 60 * 60 * 1000 // 24 timmar
+     });
+     
 
       await user.save();
 
