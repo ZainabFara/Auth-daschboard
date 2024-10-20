@@ -1,6 +1,7 @@
 //Här har jag ontrollerfunktioner för att hantera mina rutter.
 import { User } from '../models/user.model.js';
 import bcrypt from 'bcryptjs';
+import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie.js";
 
 export const signup = async (req, res) => {
    const {email, password, name} = req.body;
@@ -11,6 +12,8 @@ export const signup = async (req, res) => {
       }
 
       const userAlreadyExists = await User.findOne({email});
+      console.log("userAlreadyExists", userAlreadyExists);
+
       if(userAlreadyExists) {
          return res.status(400).json({success:false, message: "User already exists"});
       } 
@@ -28,10 +31,19 @@ export const signup = async (req, res) => {
       await user.save();
 
       //jwt
-      generateTokenAndSetCookie(res.user._id)
+      generateTokenAndSetCookie(res, user._id);
+
+      res.status(201).json({
+         succes: true,
+         massage: "User created successfully",
+         user: {
+            ...user._doc,
+            password: undefined
+         },
+      });
 
    } catch (error) {
-     res.status(400).json({sucess:false, meddage: error.message})
+     res.status(400).json({ sucess:false, message: error.message })
    }  
 };
 
