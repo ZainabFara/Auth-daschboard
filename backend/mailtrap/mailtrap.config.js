@@ -10,11 +10,11 @@ const client = new MailtrapClient({ endpoint: ENDPOINT ,token: TOKEN,});
 
 const sender = {
   email: "hello@demomailtrap.com",
-  name: "Zainab M Farah",
+  name: "Zaina Fara",
 };
 const recipients = [
   {
-    email: "zainabfarah890@gmail.com",
+    email: "zaina@gmail.com",
   }
 ];
 
